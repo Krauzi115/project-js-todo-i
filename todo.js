@@ -1,7 +1,7 @@
 /*
 What types of objects do you need?
 
-List out nouns and verbs involved in creating TODO lists.
+List out nouns and verbs involved in cdreating TODO lists.
 Decide which nouns and verbs you want/need to model.
 The nouns will be your objects and the values the functions.
 
@@ -27,7 +27,7 @@ if (commandWord === 'list') {
 
   let toDoList = fs.readFileSync('todos.txt', 'utf-8');
 
-  console.log(toDoList);
+  console.log(toDoList.trimEnd());
 }
 
 // 2. commandWord 'add'
@@ -37,13 +37,13 @@ else if (commandWord === 'add') {
 
   let commandContent = process.argv[3];
 
-  fs.appendFile('todos.txt', commandContent);
+  fs.appendFileSync('todos.txt', commandContent + '\n');
 
   console.log(`Appending "${commandContent}" to the TODO list`);
 
-  let toDoList = fs.readFileSync('todos.txt', 'utf-8');
+  // let toDoList = fs.readFileSync('todos.txt', 'utf-8');
 
-  console.log(toDoList);
+  // console.log(toDoList.trimEnd());
 }
 
 // 3. commandWord 'delete'
@@ -69,19 +69,14 @@ else if (commandWord === 'delete') {
       }
     }
 
-  dataArray.splice(lastIndex, 1);
+    dataArray.splice(lastIndex, 1);
 
-  let updatedData = dataArray.join('\n');
-  fs.writeFile('todos.txt', updatedData, (err) => {
-    if (err) throw err;
-    console.log(`Deleted "${task}" from the TODO list`);
+    let updatedData = dataArray.join('\n');
+    fs.writeFile('todos.txt', updatedData, (err) => {
+      if (err) throw err;
+      console.log(`Deleted "${task}" from the TODO list`);
+    });
   });
-});
-
-let toDoList = fs.readFileSync('todos.txt', 'utf-8');
-
-console.log(toDoList);
-
 };
 
 
